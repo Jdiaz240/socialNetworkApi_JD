@@ -1,5 +1,5 @@
-const { Thought } = require("../models")
-
+const { Thought } = require("../models");
+const { Reaction } = require("../models");
 
 module.exports = {
     //get all thoughts
@@ -57,8 +57,8 @@ module.exports = {
     //post a reaction
     addReaction(req, res) {
         Thought.findOneAndUpdate(
-          { _id: req.params.thoughtId },
-          { $addToSet: { responses: req.body } },
+          { _id: req.params.reactionId },
+          { $addToSet: { reaction: req.body } },
           { runValidators: true, new: true }
         )
           .then((thought) =>
@@ -71,8 +71,8 @@ module.exports = {
       //delete a reaction
       deleteReaction(req, res) {
         Thought.findOneAndUpdate(
-          { _id: req.params.thoughtId },
-          { $pull: { reactions: { reactionId: req.params.reactionId } } },
+          { _id: req.params.reactionId },
+          { $pull: { reaction: { reactionId: req.params.reactionId } } },
           { runValidators: true, new: true }
         )
           .then((thought) =>
