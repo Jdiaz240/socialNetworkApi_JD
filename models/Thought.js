@@ -7,19 +7,18 @@ const thoughtSchema = new Schema(
         thoughtPost: {
             type: String,
             required: true,
-            //add character limit
+            maxlength: 280,
+            minlength: 1,
         },
         createdAt: {
+            type: Date,
             get: timestamp => dateFormat(timestamp),
-
+            default: Date.now(),
         },
-        username: [
-            {
-              type: Schema.Types.ObjectId,
-              ref: 'User',
-              required: true,
-            },
-          ],
+        username: {
+            type: String,
+            required: true,
+        },
         reactions: [
             {
               type: Schema.Types.ObjectId,

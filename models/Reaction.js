@@ -4,20 +4,21 @@ const reactionSchema = new Schema(
     {
         id: {
             type: Schema.Types.ObjectId,
-            //default value set to new data type, add or automatic?
+            //default value set id to new data type, add or automatic?
         },
         reactionBody: {
             type: String,
             required: true,
-            //character limit 280 maximum,
+            max_length: 280,
         },
         username: {
-            //refernce user
+            type: String,
+            required: true,
         },
         createdAt: {
             type: Date,
             get: timestamp => dateFormat(timestamp),
-            default: //add default time function, moment js?,
+            default: Date.now()
         },
     },
     {
