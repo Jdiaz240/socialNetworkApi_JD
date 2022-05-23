@@ -16,8 +16,8 @@ module.exports = {
                 !thought
                     ? res.status(404).json({ message: 'No thought with that ID' })
                     : res.json(thought)
-        )
-        .catch((err) => res.status(500).json(err));
+            )
+            .catch((err) => res.status(500).json(err));
     },
     //create a new thought
     createThought(req, res) {
@@ -31,10 +31,10 @@ module.exports = {
     //delete a thought
     deleteThought(req, res) {
         Thought.findOneAndDelete({ _id: req.params.thoughtId })
-            .then((thought) => 
-            !thought
-            ? res.status(404).json({ message: 'No thought with that ID' })
-            : User.deleteMany({ _id: { $in: thought.user } })
+            .then((thought) =>
+                !thought
+                    ? res.status(404).json({ message: 'No thought with that ID' })
+                    : User.deleteMany({ _id: { $in: thought.user } })
             )
             .then(() => res.json({ message: 'User and Thought deleted!' }))
             .catch((err) => res.status(500).json(err));
@@ -42,13 +42,24 @@ module.exports = {
     //update a thought
     updateThought(req, res) {
         Thought.findOneAndUpdate(
-
+            { _id: req.params.thoughtId },
+            { $addToSet: { thoughts: req.body } },
         )
-    }
+            .then((user) =>
+                !thought
+                    ? res
+                        .status(404)
+                        .json({ message: 'No User found with that ID' })
+                    : res.json(user)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
+    //post a reaction
+    
+
 }
 
 
-//update a thought
-//delete a thought
-//post a reaction
+
+
 //delete a reaction
