@@ -37,7 +37,14 @@ const userController = {
         User.findOneAndUpdate(
             { _id: req.params.userId },
             { $addToSet: { thoughts: req.body } },
+            { runValidators: true, new: true }
         )
+            .then((user) =>
+                !user
+                    ? res.status(404).json({ message: 'No user with this id!' })
+                    : res.json(user)
+            )
+            .catch((err) => res.status(500).json(err));
     },
     //delete user 
     deleteUser(req, res) {
@@ -50,7 +57,38 @@ const userController = {
             .then(() => res.json({ message: 'User and thoughts deleted1' }))
             .catch((err) => res.status(500).json(err));
     },
-    
+    addFriend(req, res) {
+        console.log('You are adding an assignment');
+        console.log(req.body);
+        User.findOneAndUpdate(
+            { _id: req.params.friendId },
+            { $addToSet: { friend: req.body } },
+            { runValidators: true, new: true }
+        )
+            .then((user) =>
+                !user
+                    ? res
+                        .status(404)
+                        .json({ message: 'No user found with that ID :(' })
+                    : res.json(user)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
+    removeFriend(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.friendId },
+            { $pull: { user: { friendId: req.params.friendId } } },
+            { runValidators: true, new: true }
+        )
+            .then((user) =>
+                !user
+                    ? res
+                        .status(404)
+                        .json({ message: 'No student found with that ID :(' })
+                    : res.json(user)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
 }
 
 module.exports = userController;
