@@ -30,10 +30,10 @@ module.exports = {
     },
     //delete a thought
     deleteThought(req, res) {
-        Thought.findOneAndDelete({ _id: req.params.thoughtId })
+        Thought.findOneAndRemove({ _id: req.params.thoughtId })
             .then((thought) =>
                 !thought
-                    ? res.status(404).json({ message: 'No thought with that ID' })
+                    ? res.status(404).json({ message: 'No User with that ID' })
                     : User.deleteMany({ _id: { $in: thought.user } })
             )
             .then(() => res.json({ message: 'User and Thought deleted!' }))
@@ -55,11 +55,35 @@ module.exports = {
             .catch((err) => res.status(500).json(err));
     },
     //post a reaction
-    
-
+    addReaction(req, res) {
+        Thought.findOneAndUpdate(
+          { _id: req.params.thoughtId },
+          { $addToSet: { responses: req.body } },
+          { runValidators: true, new: true }
+        )
+          .then((thought) =>
+            !thought
+              ? res.status(404).json({ message: 'No video with this id!' })
+              : res.json(thought)
+          )
+          .catch((err) => res.status(500).json(err));
+      },
+      //delete a reaction
+      removeVideoResponse(req, res) {
+        Thought.findOneAndUpdate(
+          { _id: req.params.thoughtId },
+          { $pull: { reactions: { reactionId: req.params.reactionId } } },
+          { runValidators: true, new: true }
+        )
+          .then((thought) =>
+            !thought
+              ? res.status(404).json({ message: 'No video with this id!' })
+              : res.json(thought)
+          )
+          .catch((err) => res.status(500).json(err));
+      },
 }
 
 
 
 
-//delete a reaction

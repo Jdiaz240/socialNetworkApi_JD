@@ -50,6 +50,7 @@ const userController = {
             .then(() => res.json({ message: 'User and thoughts deleted1' }))
             .catch((err) => res.status(500).json(err));
     },
+    
 }
 
 module.exports = userController;
