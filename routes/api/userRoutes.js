@@ -17,5 +17,5 @@ router
     .get(getSingleUser)
     .put(updateUser)
     .delete(deleteUser);
-
+//friend routes -> add and remove friend
 module.exports = router;

@@ -18,12 +18,12 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date,
             get: timestamp => dateFormat(timestamp),
-            default: Date.now()
+            default: Date.now
         },
     },
     {
         toJSON: {
-            virtuals: true,
+            getters: true,
         },
         id: false,
     },
