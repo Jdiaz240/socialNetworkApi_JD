@@ -1,11 +1,14 @@
-const router = require('express').Router();
+const router = require("express").Router();
+
 const {
     getThoughts,
     getSingleThought,
     createThought,
     updateThought,
     deleteThought,
-} = require('../../controllers/thoughtController');
+    addReaction,
+    deleteReaction,
+} = require("../../controllers/thoughtController");
 
 router
     .route("/")
@@ -13,14 +16,14 @@ router
     .post(createThought)
 
 router
-    .route("/api/thoughts/:thoughtId")
+    .route("/api/thought/:thoughtId")
     .get(getSingleThought)
     .put(updateThought)
     .delete(deleteThought)
 
 router
-    .route("api/thoughts/:thoughtId/reactions")
+    .route("/api/thought/:thoughtId/reaction")
     .post(addReaction)
     .delete(deleteReaction);
-
+//why the fuck isn't this working??????
 module.exports = router;

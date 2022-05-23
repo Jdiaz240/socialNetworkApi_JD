@@ -10,16 +10,16 @@ const thoughtSchema = new Schema(
             maxlength: 280,
             minlength: 1,
         },
-        createdAt: {
-            type: Date,
-            get: timestamp => dateFormat(timestamp),
-            default: Date.now,
-        },
+        // createdAt: {
+        //     type: Date,
+        //     get: timestamp => dateFormat(timestamp),
+        //     default: Date.now,
+        // },
         username: {
             type: String,
             required: true,
         },
-        reactions: [
+        reaction: [
             {
               type: Schema.Types.ObjectId,
               ref: 'Reaction',

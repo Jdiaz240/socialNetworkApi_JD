@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const reactionSchema = new Schema(
     {
-        id: {
+        reactionId: {
             type: Schema.Types.ObjectId,
             //default value set id to new data type, add or automatic?
         },
@@ -15,11 +15,11 @@ const reactionSchema = new Schema(
             type: String,
             required: true,
         },
-        createdAt: {
-            type: Date,
-            get: timestamp => dateFormat(timestamp),
-            default: Date.now
-        },
+        // createdAt: {
+        //     type: Date,
+        //     get: timestamp => dateFormat(timestamp),
+        //     default: Date.now
+        // },
     },
     {
         toJSON: {
