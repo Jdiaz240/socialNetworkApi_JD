@@ -5,11 +5,27 @@ const dateFormat = require("../utils/dateFormat");
 const thoughtSchema = new Schema(
     {
         thoughtPost: {
-
+            type: String,
+            required: true,
+            //add character limit
         },
         createdAt: {
-            get: timestamp => dateFormat(timestamp)
+            get: timestamp => dateFormat(timestamp),
+
         },
+        username: [
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'User',
+              required: true,
+            },
+          ],
+        reactions: [
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'Reactions',
+            }
+          ]
     },
     {
         toJSON: {
