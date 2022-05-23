@@ -45,7 +45,7 @@ module.exports = {
             { _id: req.params.thoughtId },
             { $addToSet: { thoughts: req.body } },
         )
-            .then((user) =>
+            .then((thought) =>
                 !thought
                     ? res
                         .status(404)
@@ -69,7 +69,7 @@ module.exports = {
           .catch((err) => res.status(500).json(err));
       },
       //delete a reaction
-      removeVideoResponse(req, res) {
+      deleteReaction(req, res) {
         Thought.findOneAndUpdate(
           { _id: req.params.thoughtId },
           { $pull: { reactions: { reactionId: req.params.reactionId } } },
