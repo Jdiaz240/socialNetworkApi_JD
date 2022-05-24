@@ -3,26 +3,34 @@ const { Thought, Reaction } = require("../models");
 
 module.exports = {
     //get all thoughts
-    getThoughts(req, res) {
-        Thought.find()
-            .then((thought) => res.json(courses))
-            .catch((err) => res.status(500).json(err));
+    // getThought(req, res) {
+    //     Thought.find()
+    //         .then((thought) => res.json(thought))
+    //         .catch((err) => res.status(500).json(err));
+            getThought(req, res) {
+                Thought.find()
+                    .then((thoughtData) => {
+                        res.json(thoughtData)
+                    }).catch((err) => {
+                        console.log(err)
+                        res.status(500).json(err)
+                    })
     },
     //get a single thought
     getSingleThought(req, res) {
         Thought.findOne({ _id: req.params.thoughtid })
             .select('-_v')
-            .then((thought) =>
-                !thought
+            .then((thoughtData) =>
+                !thoughtData
                     ? res.status(404).json({ message: 'No thought with that ID' })
-                    : res.json(thought)
+                    : res.json(thoughtData)
             )
             .catch((err) => res.status(500).json(err));
     },
     //create a new thought
     createThought(req, res) {
         Thought.create(req.body)
-            .then((thought) => res.json(thought))
+            .then((thoughtData) => res.json(thoughtData))
             .catch((err) => {
                 console.log(err);
                 return res.status(500).json(err);
@@ -31,10 +39,10 @@ module.exports = {
     //delete a thought
     deleteThought(req, res) {
         Thought.findOneAndRemove({ _id: req.params.thoughtId })
-            .then((thought) =>
-                !thought
+            .then((thoughtData) =>
+                !thoughtData
                     ? res.status(404).json({ message: 'No User with that ID' })
-                    : User.deleteMany({ _id: { $in: thought.user } })
+                    : User.deleteMany({ _id: { $in: thoughtData.user } })
             )
             .then(() => res.json({ message: 'Thought deleted!' }))
             .catch((err) => res.status(500).json(err));
@@ -45,8 +53,8 @@ module.exports = {
             { _id: req.params.thoughtId },
             { $addToSet: { thoughts: req.body } },
         )
-            .then((thought) =>
-                !thought
+            .then((thoughtData) =>
+                !thoughtData
                     ? res
                         .status(404)
                         .json({ message: 'No User found with that ID' })

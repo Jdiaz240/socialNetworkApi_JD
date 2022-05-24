@@ -1,6 +1,7 @@
 const { User, Thought } = require("../models");
 
-const userController = {
+
+ const userController = {
     //create a user
     createUser(req, res) {
         User.create(req.body)
@@ -36,8 +37,8 @@ const userController = {
     updateUser(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $addToSet: { thoughts: req.body } },
-            { runValidators: true, new: true }
+            { $set: req.body },
+            { new: true },
         )
             .then((user) =>
                 !user
