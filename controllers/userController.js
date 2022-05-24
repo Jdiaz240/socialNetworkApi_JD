@@ -54,7 +54,7 @@ const userController = {
                     ? res.status(404).json({ message: 'No such user Id' })
                     : Thought.deletMany({ _id: { $in: user.thoughts } })
             )
-            .then(() => res.json({ message: 'User and thoughts deleted1' }))
+            .then(() => res.json({ message: 'User and thoughts deleted!' }))
             .catch((err) => res.status(500).json(err));
     },
     addFriend(req, res) {

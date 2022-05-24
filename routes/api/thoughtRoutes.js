@@ -25,5 +25,5 @@ router
     .route("/api/thought/:thoughtId/reaction")
     .post(addReaction)
     .delete(deleteReaction);
-//why the fuck isn't this working??????
+
 module.exports = router;
