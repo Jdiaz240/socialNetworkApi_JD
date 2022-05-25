@@ -50,13 +50,14 @@ const userController = {
     //delete user 
     deleteUser(req, res) {
         User.findOneAndDelete({ _id: req.params.userId })
-            .then((user) =>
-                !user
+            .then((userData) => 
+                !userData
                     ? res.status(404).json({ message: 'No such user Id' })
-                    : Thought.deletMany({ _id: { $in: user.thoughts } })
+                    : Thought.deleteMany({ _id: { $in: userData.thoughts } })
             )
+            .then((userData) => { res.json(userData)})
             .then(() => res.json({ message: 'User and thoughts deleted!' }))
-            .catch((err) => res.status(500).json(err));
+            // .catch((err) => res.status(500).json(err));
     },
     addFriend(req, res) {
         // console.log('You are adding a friend');
@@ -77,7 +78,6 @@ const userController = {
         User.findOneAndUpdate(
             { _id: req.params.userId },
             { $pull: { user: { friendId: req.params.userId } } },
-            { runValidators: true, new: true }
         )
             .then((user) =>
                 !user

@@ -9,4 +9,4 @@ In this assignment we were tasked with creating a social network api. Utilizing 
 ## Project Location: 
 [Github Repo Link](https://github.com/Jdiaz240/socialNetworkApi_JD)
 
-[Video Link]()
+[Video Link](https://drive.google.com/file/d/1Orpnyh4g4ftL7VcgyvwTC7TrPMl6mzXt/view)
