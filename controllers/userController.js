@@ -1,7 +1,7 @@
 const { User, Thought } = require("../models");
 
 
- const userController = {
+const userController = {
     //create a user
     createUser(req, res) {
         User.create(req.body)
@@ -62,14 +62,13 @@ const { User, Thought } = require("../models");
         // console.log('You are adding a friend');
         // console.log(req.body);
         User.findOneAndUpdate(
-            { _id: req.params.friendId },
-            { $addToSet: { friend: req.body } },
+            { _id: req.params.userId },
+            { $addToSet: { friends: req.params.friendId } },
+            { new: true }
         )
             .then((user) =>
                 !user
-                    ? res
-                        .status(404)
-                        .json({ message: 'No user found with that ID :(' })
+                    ? res.status(404).json({ message: 'No user found with that ID :(' })
                     : res.json(user)
             )
             .catch((err) => res.status(500).json(err));
