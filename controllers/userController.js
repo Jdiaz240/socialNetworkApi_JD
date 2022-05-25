@@ -24,7 +24,7 @@ const userController = {
     },
     //get one user
     getSingleUser(req, res) {
-        User.find(req.params.userId)
+        User.find( {_id: req.params.userId })
             .then((userData) => {
                 res.json(userData)
             }).catch((err) => {

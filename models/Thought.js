@@ -22,7 +22,7 @@ const thoughtSchema = new Schema(
         reaction: [
             {
               type: Schema.Types.ObjectId,
-              ref: 'Reaction',
+              ref: "Reaction",
             }
             //might cause an issue, we'll see 
           ]
@@ -36,5 +36,5 @@ const thoughtSchema = new Schema(
 )
 
 const Thought = model("Thought", thoughtSchema);
-
+// const Reaction = model("Reaction", reactionSchema);
 module.exports = Thought;

@@ -23,7 +23,7 @@ router
 
 router
     .route("/api/thought/:thoughtId/reaction")
-    .post(addReaction)
+    .put(addReaction)
     .delete(deleteReaction);
 
 module.exports = router;
