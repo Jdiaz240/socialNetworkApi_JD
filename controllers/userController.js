@@ -59,12 +59,11 @@ const { User, Thought } = require("../models");
             .catch((err) => res.status(500).json(err));
     },
     addFriend(req, res) {
-        console.log('You are adding a friend');
-        console.log(req.body);
+        // console.log('You are adding a friend');
+        // console.log(req.body);
         User.findOneAndUpdate(
             { _id: req.params.friendId },
             { $addToSet: { friend: req.body } },
-            { runValidators: true, new: true }
         )
             .then((user) =>
                 !user
@@ -77,8 +76,8 @@ const { User, Thought } = require("../models");
     },
     removeFriend(req, res) {
         User.findOneAndUpdate(
-            { _id: req.params.friendId },
-            { $pull: { user: { friendId: req.params.friendId } } },
+            { _id: req.params.userId },
+            { $pull: { user: { friendId: req.params.userId } } },
             { runValidators: true, new: true }
         )
             .then((user) =>
