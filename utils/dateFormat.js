@@ -1,6 +1,6 @@
-const addDate = date => {
-    let dateString = date.toString();
 
-    const lastCharacter = dateString.characterAt(dateString.length -1);
-    
-}
+const dateFormat = (date) => {
+    // Format date as MM/DD/YYYY
+    return date.toLocaleDateString();
+  }
+module.exports = dateFormat

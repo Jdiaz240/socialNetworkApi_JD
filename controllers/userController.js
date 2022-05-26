@@ -24,7 +24,10 @@ const userController = {
     },
     //get one user
     getSingleUser(req, res) {
-        User.find( {_id: req.params.userId })
+        User.findOne({ _id: req.params.userId })
+            .select('-__v')
+            .populate('friends')
+            .populate('thoughts')
             .then((userData) => {
                 res.json(userData)
             }).catch((err) => {
@@ -50,14 +53,14 @@ const userController = {
     //delete user 
     deleteUser(req, res) {
         User.findOneAndDelete({ _id: req.params.userId })
-            .then((userData) => 
+            .then((userData) =>
                 !userData
                     ? res.status(404).json({ message: 'No such user Id' })
                     : Thought.deleteMany({ _id: { $in: userData.thoughts } })
             )
-            .then((userData) => { res.json(userData)})
+            .then((userData) => { res.json(userData) })
             .then(() => res.json({ message: 'User and thoughts deleted!' }))
-            // .catch((err) => res.status(500).json(err));
+        // .catch((err) => res.status(500).json(err));
     },
     addFriend(req, res) {
         // console.log('You are adding a friend');
@@ -77,7 +80,7 @@ const userController = {
     removeFriend(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $pull: { user: { friendId: req.params.userId } } },
+            { $pull: { friends: req.params.friendId } },
         )
             .then((user) =>
                 !user

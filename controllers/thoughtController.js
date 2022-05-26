@@ -29,7 +29,11 @@ module.exports = {
     //create a new thought
     createThought(req, res) {
         Thought.create(req.body)
-            .then((thoughtData) => res.json(thoughtData))
+            .then((thoughtData) => {
+// need to add the thought to the user make sure to use the userid in the req.body
+
+                res.json(thoughtData)
+            })
             .catch((err) => {
                 console.log(err);
                 return res.status(500).json(err);
@@ -79,7 +83,7 @@ module.exports = {
     deleteReaction(req, res) {
         Reaction.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reaction: { reactionId: req.params.reactionId } } },
+            { $pull: { reaction: req.params.reactionId } },
             // { runValidators: true, new: true }
         )
             .then((thought) =>
